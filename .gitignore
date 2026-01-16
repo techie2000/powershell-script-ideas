@@ -1,0 +1,48 @@
+# PowerShell and Windows specific
+*.ps1xml
+*.pssc
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# Test results
+TestResults/
+*.trx
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# PowerShell Gallery files
+*.nupkg
+
+# Local configuration (if needed in future)
+local.settings.ps1
+*.local.ps1
