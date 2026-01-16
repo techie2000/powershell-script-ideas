@@ -48,10 +48,12 @@ function Get-ProfileFunctions {
     # Get all functions from our custom scripts
     # Exclude built-in and module functions by filtering on Source
     $customFunctions = Get-Command -CommandType Function | Where-Object { 
-        $_.Source -eq '' -and 
-        $_.Name -like 'Get-*' -or $_.Name -like 'Set-*' -or 
-        $_.Name -like 'New-*' -or $_.Name -like 'Remove-*' -or
-        $_.Name -like 'Invoke-*' -or $_.Name -like 'Test-*'
+        $_.Source -eq '' -and (
+            $_.Name -like 'Get-*' -or $_.Name -like 'Set-*' -or 
+            $_.Name -like 'New-*' -or $_.Name -like 'Remove-*' -or
+            $_.Name -like 'Invoke-*' -or $_.Name -like 'Test-*' -or
+            $_.Name -like 'Show-*'
+        )
     } | Where-Object {
         # Further filter to only include our custom functions
         $helpContent = Get-Help $_.Name -ErrorAction SilentlyContinue
