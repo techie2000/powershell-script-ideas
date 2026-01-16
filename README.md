@@ -79,10 +79,15 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
   dirsize "C:\Windows"
   ```
 
-- **Find-LargeFiles** (alias: `findlarge`) - Find files larger than specified size
+- **Get-LargeFiles** (alias: `glf`) - Find files larger than specified size with advanced filtering
   ```powershell
-  Find-LargeFiles -Path "C:\Users" -MinimumSizeMB 100
-  findlarge -MinimumSizeMB 50
+  Get-LargeFiles                              # Default: >=10MB in current directory
+  glf -m 500KB                                # Files >=500KB
+  glf -m 1GB -r                               # Files >=1GB, recurse all levels
+  glf -m 2GB -d 3                             # Files >=2GB, recurse 3 levels
+  glf -m 1GB -d 3 -ca 2025-01-01              # Files >=1GB, created after date
+  glf -ma 2025-01-01                          # Modified after date
+  glf -h                                      # Show detailed help
   ```
 
 ### System Info (Scripts/SystemInfo.ps1)

@@ -7,7 +7,7 @@ This folder contains personal PowerShell scripts that define custom functions an
 ### FileHelpers.ps1
 Utilities for working with files and directories:
 - `Get-DirectorySize` / `dirsize` - Calculate directory sizes
-- `Find-LargeFiles` / `findlarge` - Find large files on disk
+- `Get-LargeFiles` / `glf` - Find large files with advanced filtering (size, date, recursion depth)
 
 ### SystemInfo.ps1
 System information and monitoring functions:
