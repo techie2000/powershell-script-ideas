@@ -27,11 +27,15 @@ powershell-script-ideas/
 
 - **[Microsoft.PowerShell_profile.ps1](#how-it-works)** - Main profile that auto-loads all scripts and modules
 - **[Setup-Profile.ps1](#installation)** - Automated installation script with copy or symlink options
+
+- **[Modules/ExampleModule](#examplemodule)** - Template for creating custom modules
+
 - **[Scripts/FileHelpers.ps1](#file-helpers-scriptsfilehelpersps1)** - File and directory utility functions
-- **[Scripts/SystemInfo.ps1](#system-info-scriptssysteminfops1)** - System information and monitoring functions
 - **[Scripts/NavigationHelpers.ps1](#navigation-scriptsnavigationhelpersps1)** - Quick directory navigation shortcuts
 - **[Scripts/ProfileHelpers.ps1](#profile-helpers-scriptsprofilehelpersps1)** - Profile discovery and help utilities
-- **[Modules/ExampleModule](#examplemodule)** - Template for creating custom modules
+- **[Scripts/SystemInfo.ps1](#system-info-scriptssysteminfops1)** - System information and monitoring functions
+
+
 
 ## Installation
 
@@ -105,14 +109,6 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
 
 ### System Info (Scripts/SystemInfo.ps1)
 
-- **Get-SystemInfo** (aliases: `sysinfo`, `getsysinfo`, `gsi`) - Display system information
-  ```powershell
-  Get-SystemInfo
-  sysinfo                                     # Base alias
-  getsysinfo                                  # Descriptive alias
-  gsi                                         # Short alias
-  ```
-
 - **Get-DiskSpace** (aliases: `diskspace`, `getdiskspace`, `gds`) - Show disk space for all drives
   ```powershell
   Get-DiskSpace
@@ -127,6 +123,14 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
   netadapters                                 # Base alias
   getnetadapters                              # Descriptive alias
   gna                                         # Short alias
+  ```
+
+- **Get-SystemInfo** (aliases: `sysinfo`, `getsysinfo`, `gsi`) - Display system information
+  ```powershell
+  Get-SystemInfo
+  sysinfo                                     # Base alias
+  getsysinfo                                  # Descriptive alias
+  gsi                                         # Short alias
   ```
 
 ### Navigation Helpers (Scripts/NavigationHelpers.ps1)
