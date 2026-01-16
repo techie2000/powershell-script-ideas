@@ -19,7 +19,7 @@
     CompanyName = 'Unknown'
 
     # Copyright statement for this module
-    Copyright = '(c) 2026. All rights reserved.'
+    Copyright = '(c) 2024. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description = 'An example PowerShell module template for future development'
