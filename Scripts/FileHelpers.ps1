@@ -116,9 +116,6 @@ function Get-LargeFiles {
         return
     }
 
-    # Track parameter sources for display
-    $paramSources = @{}
-    
     # Check which parameters were explicitly specified by user
     $minSizeSpecified = $PSBoundParameters.ContainsKey('MinSize')
     $recurseSpecified = $PSBoundParameters.ContainsKey('Recurse')
@@ -246,6 +243,8 @@ function Get-LargeFiles {
 
     # Display parameters being used
     Write-Host "`nRunning Get-LargeFiles with parameters:" -ForegroundColor Cyan
+    
+    # Path is currently always defaulted (no Path parameter in function signature)
     Write-Host ("  Path       : {0} (defaulted)" -f $gciParams.Path)
     Write-Host ("  Recurse    : {0} ({1})" -f $actualRecurse, $recursionNote)
     Write-Host ("  Depth      : {0}" -f $depthDisplay)
