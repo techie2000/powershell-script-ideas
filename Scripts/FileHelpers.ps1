@@ -9,14 +9,41 @@ function Get-DirectorySize {
         Recursively calculates the total size of all files in a directory
     .PARAMETER Path
         The path to the directory
+    .PARAMETER Help
+        Display detailed usage help
     .EXAMPLE
         Get-DirectorySize -Path "C:\Users"
+    .EXAMPLE
+        dirsize "C:\Windows"
     #>
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, Position=0)]
-        [string]$Path
+        [Parameter(Mandatory=$false, Position=0)]
+        [string]$Path,
+        
+        [Alias('h')]
+        [switch]$Help
     )
+    
+    if ($Help) {
+        Write-Host "Get-DirectorySize usage:" -ForegroundColor Green
+        Write-Host "  dirsize C:\Path             # Get size of directory"
+        Write-Host "  gds C:\Users                # Using short alias"
+        Write-Host "  getdirsize .                # Current directory"
+        Write-Host ""
+        Write-Host "Parameters:" -ForegroundColor Cyan
+        Write-Host "  -Path          Directory path (required)"
+        Write-Host "  -Help, -h      Show this help message"
+        Write-Host ""
+        Write-Host "Aliases:" -ForegroundColor Cyan
+        Write-Host "  dirsize, getdirsize, gds"
+        return
+    }
+    
+    if (-not $Path) {
+        Write-Error "Path parameter is required. Use -Help for usage information."
+        return
+    }
     
     if (Test-Path $Path) {
         $size = (Get-ChildItem -Path $Path -Recurse -File -ErrorAction SilentlyContinue | 
@@ -184,7 +211,7 @@ function Get-LargeFiles {
             $recursionNote = "overwritten (Depth=0 overrides -Recurse)"
         } else {
             # Depth=0 specified, but -Recurse was not specified
-            $recursionNote = "specified (via Depth=0)"
+            $recursionNote = "inferred (from Depth=0)"
         }
     } elseif ($Recurse) {
         $gciParams['Recurse'] = $true
