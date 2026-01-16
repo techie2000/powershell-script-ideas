@@ -177,6 +177,7 @@ function Get-LargeFiles {
     } elseif ($Depth -eq 0 -and $depthSpecified) {
         # Depth=0 was explicitly specified, which means no recursion
         $actualRecurse = $false
+        $actualDepth = 0  # Set actualDepth so we can track it was specified
         $recursionNote = "overwritten by Depth=0"
         if ($recurseSpecified -and $originalRecurse) {
             # User specified both -Recurse and -Depth 0, Depth wins
