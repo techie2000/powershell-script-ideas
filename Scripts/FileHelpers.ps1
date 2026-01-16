@@ -206,39 +206,29 @@ function Get-LargeFiles {
     # Parse date filters if provided
     $createdAfterDate = $null
     $modifiedAfterDate = $null
-    $createdDisplay = "none"
-    $modifiedDisplay = "none"
+    $createdDisplay = "none (defaulted)"
+    $modifiedDisplay = "none (defaulted)"
     
     if ($CreatedAfter) {
         try {
             $createdAfterDate = [DateTime]::Parse($CreatedAfter)
-            $createdDisplay = if ($createdAfterSpecified) {
-                "$($createdAfterDate.ToString('yyyy-MM-dd')) (specified)"
-            } else {
-                "$($createdAfterDate.ToString('yyyy-MM-dd'))"
-            }
+            # If we're in this block, CreatedAfter was specified
+            $createdDisplay = "$($createdAfterDate.ToString('yyyy-MM-dd')) (specified)"
         } catch {
             Write-Error "Invalid CreatedAfter date format: $CreatedAfter. Use format like '2025-01-01'"
             return
         }
-    } else {
-        $createdDisplay = "none (defaulted)"
     }
     
     if ($ModifiedAfter) {
         try {
             $modifiedAfterDate = [DateTime]::Parse($ModifiedAfter)
-            $modifiedDisplay = if ($modifiedAfterSpecified) {
-                "$($modifiedAfterDate.ToString('yyyy-MM-dd')) (specified)"
-            } else {
-                "$($modifiedAfterDate.ToString('yyyy-MM-dd'))"
-            }
+            # If we're in this block, ModifiedAfter was specified
+            $modifiedDisplay = "$($modifiedAfterDate.ToString('yyyy-MM-dd')) (specified)"
         } catch {
             Write-Error "Invalid ModifiedAfter date format: $ModifiedAfter. Use format like '2025-01-01'"
             return
         }
-    } else {
-        $modifiedDisplay = "none (defaulted)"
     }
 
     # Display parameters being used
