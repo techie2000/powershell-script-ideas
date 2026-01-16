@@ -73,5 +73,11 @@ function Get-NetworkAdapters {
 
 # Aliases for common functions
 Set-Alias -Name sysinfo -Value Get-SystemInfo
+Set-Alias -Name getsysinfo -Value Get-SystemInfo
+Set-Alias -Name gsi -Value Get-SystemInfo
 Set-Alias -Name diskspace -Value Get-DiskSpace
+Set-Alias -Name getdiskspace -Value Get-DiskSpace
+Set-Alias -Name gds -Value Get-DiskSpace
 Set-Alias -Name netadapters -Value Get-NetworkAdapters
+Set-Alias -Name getnetadapters -Value Get-NetworkAdapters
+Set-Alias -Name gna -Value Get-NetworkAdapters

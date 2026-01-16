@@ -11,15 +11,27 @@ This repository contains a structured approach to managing PowerShell profiles, 
 ```
 powershell-script-ideas/
 ├── Microsoft.PowerShell_profile.ps1    # PowerShell profile that auto-loads scripts
+├── Setup-Profile.ps1                    # Installation script for easy setup
 ├── Scripts/                             # Personal scripts with functions and aliases
 │   ├── FileHelpers.ps1                 # File and directory utilities
 │   ├── SystemInfo.ps1                  # System information functions
-│   └── NavigationHelpers.ps1           # Quick navigation shortcuts
+│   ├── NavigationHelpers.ps1           # Quick navigation shortcuts
+│   └── ProfileHelpers.ps1              # Profile management and discovery utilities
 └── Modules/                             # Custom PowerShell modules
     └── ExampleModule/                  # Example module template
         ├── ExampleModule.psm1          # Module script file
         └── ExampleModule.psd1          # Module manifest
 ```
+
+### Key Files
+
+- **[Microsoft.PowerShell_profile.ps1](#how-it-works)** - Main profile that auto-loads all scripts and modules
+- **[Setup-Profile.ps1](#installation)** - Automated installation script with copy or symlink options
+- **[Scripts/FileHelpers.ps1](#file-helpers-scriptsfilehelpersps1)** - File and directory utility functions
+- **[Scripts/SystemInfo.ps1](#system-info-scriptssysteminfops1)** - System information and monitoring functions
+- **[Scripts/NavigationHelpers.ps1](#navigation-scriptsnavigationhelpersps1)** - Quick directory navigation shortcuts
+- **[Scripts/ProfileHelpers.ps1](#profile-helpers-scriptsprofilehelpersps1)** - Profile discovery and help utilities
+- **[Modules/ExampleModule](#examplemodule)** - Template for creating custom modules
 
 ## Installation
 
@@ -93,22 +105,28 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
 
 ### System Info (Scripts/SystemInfo.ps1)
 
-- **Get-SystemInfo** (alias: `sysinfo`) - Display system information
+- **Get-SystemInfo** (aliases: `sysinfo`, `getsysinfo`, `gsi`) - Display system information
   ```powershell
   Get-SystemInfo
-  sysinfo
+  sysinfo                                     # Base alias
+  getsysinfo                                  # Descriptive alias
+  gsi                                         # Short alias
   ```
 
-- **Get-DiskSpace** (alias: `diskspace`) - Show disk space for all drives
+- **Get-DiskSpace** (aliases: `diskspace`, `getdiskspace`, `gds`) - Show disk space for all drives
   ```powershell
   Get-DiskSpace
-  diskspace
+  diskspace                                   # Base alias
+  getdiskspace                                # Descriptive alias
+  gds                                         # Short alias
   ```
 
-- **Get-NetworkAdapters** (alias: `netadapters`) - Display network adapter info
+- **Get-NetworkAdapters** (aliases: `netadapters`, `getnetadapters`, `gna`) - Display network adapter info
   ```powershell
   Get-NetworkAdapters
-  netadapters
+  netadapters                                 # Base alias
+  getnetadapters                              # Descriptive alias
+  gna                                         # Short alias
   ```
 
 ### Navigation Helpers (Scripts/NavigationHelpers.ps1)
@@ -263,4 +281,4 @@ Feel free to add your own scripts and modules to this repository. Commit changes
 
 ## License
 
-See LICENSE file for details.
+See [LICENSE](LICENSE) file for details.

@@ -129,11 +129,11 @@ function Show-ProfileHelp {
     
     Write-Host "System Info:" -ForegroundColor Cyan
     Write-Host "  Get-SystemInfo         Display system information" -ForegroundColor White
-    Write-Host "    Alias: sysinfo" -ForegroundColor Gray
+    Write-Host "    Aliases: sysinfo, getsysinfo, gsi" -ForegroundColor Gray
     Write-Host "  Get-DiskSpace          Show disk space usage" -ForegroundColor White
-    Write-Host "    Alias: diskspace" -ForegroundColor Gray
+    Write-Host "    Aliases: diskspace, getdiskspace, gds" -ForegroundColor Gray
     Write-Host "  Get-NetworkAdapters    Display network configuration" -ForegroundColor White
-    Write-Host "    Alias: netadapters" -ForegroundColor Gray
+    Write-Host "    Aliases: netadapters, getnetadapters, gna" -ForegroundColor Gray
     Write-Host ""
     
     Write-Host "Navigation:" -ForegroundColor Cyan

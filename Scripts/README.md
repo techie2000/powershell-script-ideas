@@ -11,9 +11,9 @@ Utilities for working with files and directories:
 
 ### SystemInfo.ps1
 System information and monitoring functions:
-- `Get-SystemInfo` / `sysinfo` - Display system information
-- `Get-DiskSpace` / `diskspace` - Show disk space usage
-- `Get-NetworkAdapters` / `netadapters` - Display network configuration
+- `Get-SystemInfo` / `sysinfo` / `getsysinfo` / `gsi` - Display system information
+- `Get-DiskSpace` / `diskspace` / `getdiskspace` / `gds` - Show disk space usage
+- `Get-NetworkAdapters` / `netadapters` / `getnetadapters` / `gna` - Display network configuration
 
 ### NavigationHelpers.ps1
 Quick navigation shortcuts:
