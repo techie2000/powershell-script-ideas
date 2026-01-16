@@ -116,6 +116,20 @@ function Get-LargeFiles {
         return
     }
 
+    # Track parameter sources for display
+    $paramSources = @{}
+    
+    # Check which parameters were explicitly specified by user
+    $minSizeSpecified = $PSBoundParameters.ContainsKey('MinSize')
+    $recurseSpecified = $PSBoundParameters.ContainsKey('Recurse')
+    $depthSpecified = $PSBoundParameters.ContainsKey('Depth')
+    $createdAfterSpecified = $PSBoundParameters.ContainsKey('CreatedAfter')
+    $modifiedAfterSpecified = $PSBoundParameters.ContainsKey('ModifiedAfter')
+    
+    # Track original values before any modifications
+    $originalRecurse = $Recurse.IsPresent
+    $originalDepth = $Depth
+
     # Parse the MinSize string to bytes
     $minSizeBytes = 0
     if ($MinSize -match '^(\d+(?:\.\d+)?)\s*(TB|GB|MB|KB|B)?$') {
@@ -146,35 +160,102 @@ function Get-LargeFiles {
         ErrorAction = 'SilentlyContinue'
     }
 
-    # Handle recursion
+    # Handle recursion logic and track changes
+    $actualRecurse = $false
+    $actualDepth = $null
+    $recursionNote = ""
+    
     if ($Depth -gt 0) {
         $gciParams['Recurse'] = $true
         $gciParams['Depth'] = $Depth
+        $actualRecurse = $true
+        $actualDepth = $Depth
+        
+        if ($depthSpecified) {
+            $recursionNote = "specified"
+            if ($recurseSpecified -and $originalRecurse) {
+                $recursionNote = "specified (Depth implies Recurse)"
+            }
+        }
+    } elseif ($Depth -eq 0 -and $depthSpecified) {
+        # Depth=0 was explicitly specified, which means no recursion
+        $actualRecurse = $false
+        $recursionNote = "overwritten by Depth=0"
+        if ($recurseSpecified -and $originalRecurse) {
+            # User specified both -Recurse and -Depth 0, Depth wins
+            $recursionNote = "overwritten (Depth=0 overrides -Recurse)"
+        }
     } elseif ($Recurse) {
         $gciParams['Recurse'] = $true
+        $actualRecurse = $true
+        $recursionNote = "specified"
+    } else {
+        $recursionNote = "defaulted"
+    }
+    
+    # Determine depth display value
+    $depthDisplay = if ($actualDepth -ne $null) {
+        if ($depthSpecified) {
+            "$actualDepth (specified)"
+        } else {
+            "$actualDepth"
+        }
+    } elseif ($actualRecurse) {
+        "unlimited (implied by -Recurse)"
+    } else {
+        "0 (defaulted - no recursion)"
     }
 
     # Parse date filters if provided
     $createdAfterDate = $null
     $modifiedAfterDate = $null
+    $createdDisplay = "none"
+    $modifiedDisplay = "none"
     
     if ($CreatedAfter) {
         try {
             $createdAfterDate = [DateTime]::Parse($CreatedAfter)
+            $createdDisplay = if ($createdAfterSpecified) {
+                "$($createdAfterDate.ToString('yyyy-MM-dd')) (specified)"
+            } else {
+                "$($createdAfterDate.ToString('yyyy-MM-dd'))"
+            }
         } catch {
             Write-Error "Invalid CreatedAfter date format: $CreatedAfter. Use format like '2025-01-01'"
             return
         }
+    } else {
+        $createdDisplay = "none (defaulted)"
     }
     
     if ($ModifiedAfter) {
         try {
             $modifiedAfterDate = [DateTime]::Parse($ModifiedAfter)
+            $modifiedDisplay = if ($modifiedAfterSpecified) {
+                "$($modifiedAfterDate.ToString('yyyy-MM-dd')) (specified)"
+            } else {
+                "$($modifiedAfterDate.ToString('yyyy-MM-dd'))"
+            }
         } catch {
             Write-Error "Invalid ModifiedAfter date format: $ModifiedAfter. Use format like '2025-01-01'"
             return
         }
+    } else {
+        $modifiedDisplay = "none (defaulted)"
     }
+
+    # Display parameters being used
+    Write-Host "`nRunning Get-LargeFiles with parameters:" -ForegroundColor Cyan
+    Write-Host ("  Path       : {0} (defaulted)" -f $gciParams.Path)
+    Write-Host ("  Recurse    : {0} ({1})" -f $actualRecurse, $recursionNote)
+    Write-Host ("  Depth      : {0}" -f $depthDisplay)
+    
+    $minSizeSource = if ($minSizeSpecified) { "specified" } else { "defaulted" }
+    Write-Host ("  MinSize    : {0} ({1} bytes) ({2})" -f $MinSize, $minSizeBytes, $minSizeSource)
+    Write-Host ("  Created>=  : {0}" -f $createdDisplay)
+    Write-Host ("  Modified>= : {0}" -f $modifiedDisplay)
+    Write-Host ""
+
 
     # Get files and apply filters
     $files = Get-ChildItem @gciParams | Where-Object {
