@@ -80,11 +80,11 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
   gds "C:\Projects"
   ```
 
-- **Get-LargeFiles** (aliases: `glf`, `getlargefiles`) - Find files larger than specified size with advanced filtering
+- **Get-LargeFiles** (aliases: `largefiles`, `getlargefiles`, `glf`) - Find files larger than specified size with advanced filtering
   ```powershell
   Get-LargeFiles                              # Default: >=10MB in current directory
-  glf -m 500KB                                # Files >=500KB (short form)
-  getlargefiles -m 1GB -r                     # Files >=1GB, recurse all levels
+  largefiles -m 500KB                         # Files >=500KB (consistent with dirsize)
+  glf -m 1GB -r                               # Files >=1GB, recurse all levels (short form)
   glf -m 2GB -d 3                             # Files >=2GB, recurse 3 levels
   glf -m 1GB -d 3 -ca 2025-01-01              # Files >=1GB, created after date
   glf -ma 2025-01-01                          # Modified after date
@@ -125,6 +125,22 @@ home
 docs
 downloads
 ```
+
+### Profile Helpers (Scripts/ProfileHelpers.ps1)
+
+- **Get-ProfileFunctions** (aliases: `funcs`, `listfuncs`) - List all custom profile functions
+  ```powershell
+  Get-ProfileFunctions                        # List function names only
+  funcs -ShowSynopsis                         # Show functions with descriptions
+  funcs -ShowAliases                          # Show functions with aliases
+  funcs -Detailed                             # Show both synopsis and aliases
+  ```
+
+- **Show-ProfileHelp** (alias: `profilehelp`) - Display quick reference guide
+  ```powershell
+  Show-ProfileHelp                            # Show all available functions and aliases
+  profilehelp                                 # Quick reference
+  ```
 
 ## Available Modules
 
