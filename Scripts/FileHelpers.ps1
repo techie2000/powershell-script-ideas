@@ -211,4 +211,7 @@ function Get-LargeFiles {
 
 # Aliases for common functions
 Set-Alias -Name dirsize -Value Get-DirectorySize
+Set-Alias -Name getdirsize -Value Get-DirectorySize
+Set-Alias -Name gds -Value Get-DirectorySize
 Set-Alias -Name glf -Value Get-LargeFiles
+Set-Alias -Name getlargefiles -Value Get-LargeFiles

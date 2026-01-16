@@ -73,17 +73,18 @@ New-Item -ItemType SymbolicLink -Path $PROFILE -Target "C:\path\to\powershell-sc
 
 ### File Helpers (Scripts/FileHelpers.ps1)
 
-- **Get-DirectorySize** (alias: `dirsize`) - Calculate total size of a directory
+- **Get-DirectorySize** (aliases: `dirsize`, `getdirsize`, `gds`) - Calculate total size of a directory
   ```powershell
   Get-DirectorySize -Path "C:\Users"
   dirsize "C:\Windows"
+  gds "C:\Projects"
   ```
 
-- **Get-LargeFiles** (alias: `glf`) - Find files larger than specified size with advanced filtering
+- **Get-LargeFiles** (aliases: `glf`, `getlargefiles`) - Find files larger than specified size with advanced filtering
   ```powershell
   Get-LargeFiles                              # Default: >=10MB in current directory
-  glf -m 500KB                                # Files >=500KB
-  glf -m 1GB -r                               # Files >=1GB, recurse all levels
+  glf -m 500KB                                # Files >=500KB (short form)
+  getlargefiles -m 1GB -r                     # Files >=1GB, recurse all levels
   glf -m 2GB -d 3                             # Files >=2GB, recurse 3 levels
   glf -m 1GB -d 3 -ca 2025-01-01              # Files >=1GB, created after date
   glf -ma 2025-01-01                          # Modified after date
