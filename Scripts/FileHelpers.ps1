@@ -122,13 +122,17 @@ function Get-LargeFiles {
         $number = [double]$Matches[1]
         $unit = $Matches[2]
         
-        switch ($unit) {
-            'TB' { $minSizeBytes = $number * 1TB }
-            'GB' { $minSizeBytes = $number * 1GB }
-            'MB' { $minSizeBytes = $number * 1MB }
-            'KB' { $minSizeBytes = $number * 1KB }
-            'B'  { $minSizeBytes = $number }
-            default { $minSizeBytes = $number }  # Assume bytes if no unit
+        # Handle unit conversion - if no unit specified, assume bytes
+        if ([string]::IsNullOrEmpty($unit)) {
+            $minSizeBytes = $number  # No unit means bytes
+        } else {
+            switch ($unit) {
+                'TB' { $minSizeBytes = $number * 1TB }
+                'GB' { $minSizeBytes = $number * 1GB }
+                'MB' { $minSizeBytes = $number * 1MB }
+                'KB' { $minSizeBytes = $number * 1KB }
+                'B'  { $minSizeBytes = $number }
+            }
         }
     } else {
         Write-Error "Invalid MinSize format: $MinSize. Use format like '10MB', '500KB', '1GB', etc."
@@ -184,11 +188,22 @@ function Get-LargeFiles {
     # Format and display results
     if ($files) {
         $files | Select-Object FullName,
-                              @{Name="SizeMB";Expression={[math]::Round($_.Length / 1MB, 2)}},
-                              @{Name="SizeGB";Expression={[math]::Round($_.Length / 1GB, 2)}},
+                              @{Name="Size";Expression={
+                                  $size = $_.Length
+                                  if ($size -ge 1GB) {
+                                      "{0:N2} GB" -f ($size / 1GB)
+                                  } elseif ($size -ge 1MB) {
+                                      "{0:N2} MB" -f ($size / 1MB)
+                                  } elseif ($size -ge 1KB) {
+                                      "{0:N2} KB" -f ($size / 1KB)
+                                  } else {
+                                      "$size bytes"
+                                  }
+                              }},
+                              @{Name="SizeBytes";Expression={$_.Length}},
                               CreationTime,
                               LastWriteTime |
-                 Sort-Object { $_.SizeMB } -Descending
+                 Sort-Object SizeBytes -Descending
     } else {
         Write-Host "No files found matching the criteria." -ForegroundColor Yellow
     }
